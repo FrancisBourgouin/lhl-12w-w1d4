@@ -1,4 +1,4 @@
-var movieList = [
+var movies = [
   { title: 'Black Panther', year: 2018, genre: 'action', rating: 7.4 },
   { title: 'Avengers Infinity War', year: 2018, genre: 'action', rating: 8.5 },
   {
@@ -29,53 +29,55 @@ var movieList = [
   },
 ];
 
-function filter(list, callback) {
-  var filteredList = [];
-  for (var i = 0; i < list.length; i++) {
-    if (callback(list[i])) {
-      filteredList.push(list[i]);
+// filter function using a callback
+var filterArr = function(list, cb) {
+  var outputArr = [];
+  // loop through the array of objects and
+  // push if the rating is 8 or more
+  for (var item of list) {
+    if (cb(item)) {
+      outputArr.push(item);
     }
   }
-  return filteredList;
-}
 
-// Using our filter function to get the movies with a higher rating
-var highestRatings = filter(movieList, function(movie) {
-  return movie.rating >= 8;
-});
+  return outputArr;
+};
 
-console.log(highestRatings);
+// Update function equivalent to the built-in map function
+var update = function(list, cb) {
+  var outputArr = [];
 
-// Create a new array with a different format for the movie objects
-var update = function(list, callback) {
-  var output = [];
   for (var item of list) {
-    output.push(callback(item));
+    outputArr.push(cb(item));
   }
-  return output;
+
+  return outputArr;
 };
 
-var movieTitles = update(movieList, function(movieObj) {
-  var newMovieObj = {
-    title: movieObj,
-  };
-  return newMovieObj;
-});
-
-console.log(movieTitles);
-
-var highRating = function(movie) {
-  return movie.rating >= 8;
+var filterComedy = function(movieObj) {
+  return movieObj.genre === 'Comedy';
 };
 
-// getting the titles of only the movies with a rating of 8 or above
-var highRatingTitles = update(filter(movieList, highRating), function(
-  movieObj
-) {
-  var newObject = {
-    title: movieObj.title,
-  };
-  return newObject;
-});
+var highestRating = function(movieObj) {
+  return movieObj.rating > 8;
+};
 
-console.log(highRatingTitles);
+var goodComedies = function(movieObj) {
+  return movieObj.rating > 8 && movieObj.genre === 'action';
+};
+
+var compactTitles = function(movieObj) {
+  return movieObj.title + ' ' + movieObj.genre + ' ' + movieObj.year;
+};
+
+// Getting the titles as strings
+var titles = update(movies, compactTitles);
+
+// Getting the movies with higher ratings
+var goodMovies = filterArr(movies, highestRating);
+
+// Filtering movies for good comedies
+var comedies = filterArr(movies, goodComedies);
+
+// Chainning the built-in filter and map functions
+var myBestTitles = movies.filter(goodComedies).map(compactTitles);

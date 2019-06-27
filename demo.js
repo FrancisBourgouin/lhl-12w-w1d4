@@ -1,4 +1,4 @@
-var movies = [
+let movies = [
   { title: 'Black Panther', year: 2018, genre: 'action', rating: 7.4 },
   { title: 'Avengers Infinity War', year: 2018, genre: 'action', rating: 8.5 },
   {
@@ -30,11 +30,11 @@ var movies = [
 ];
 
 // filter function using a callback
-var filterArr = function(list, cb) {
-  var outputArr = [];
+let filterArr = function(list, cb) {
+  let outputArr = [];
   // loop through the array of objects and
   // push if the rating is 8 or more
-  for (var item of list) {
+  for (let item of list) {
     if (cb(item)) {
       outputArr.push(item);
     }
@@ -44,40 +44,40 @@ var filterArr = function(list, cb) {
 };
 
 // Update function equivalent to the built-in map function
-var update = function(list, cb) {
-  var outputArr = [];
+let update = function(list, cb) {
+  let outputArr = [];
 
-  for (var item of list) {
+  for (let item of list) {
     outputArr.push(cb(item));
   }
 
   return outputArr;
 };
 
-var filterComedy = function(movieObj) {
+let filterComedy = function(movieObj) {
   return movieObj.genre === 'Comedy';
 };
 
-var highestRating = function(movieObj) {
+let highestRating = function(movieObj) {
   return movieObj.rating > 8;
 };
 
-var goodComedies = function(movieObj) {
+let goodComedies = function(movieObj) {
   return movieObj.rating > 8 && movieObj.genre === 'action';
 };
 
-var compactTitles = function(movieObj) {
+let compactTitles = function(movieObj) {
   return movieObj.title + ' ' + movieObj.genre + ' ' + movieObj.year;
 };
 
 // Getting the titles as strings
-var titles = update(movies, compactTitles);
+let titles = update(movies, compactTitles);
 
 // Getting the movies with higher ratings
-var goodMovies = filterArr(movies, highestRating);
+let goodMovies = filterArr(movies, highestRating);
 
 // Filtering movies for good comedies
-var comedies = filterArr(movies, goodComedies);
+let comedies = filterArr(movies, goodComedies);
 
 // Chainning the built-in filter and map functions
-var myBestTitles = movies.filter(goodComedies).map(compactTitles);
+let myBestTitles = movies.filter(goodComedies).map(compactTitles);
